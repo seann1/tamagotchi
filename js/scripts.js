@@ -11,18 +11,25 @@ var Tamagotchi = {
   activityLevel: 0,
 
   timePasses: function(){
-
     this.foodLevel --;
     this.sleepLevel --;
     this.activityLevel --;
   },
 
   isAlive: function(){
-    if (this.foodLevel > 0)
+    if (this.foodLevel >= 1 && this.sleepLevel >= 1 && this.activityLevel >= 1 )
       return true;
-    else
-      return false;
-  }
+    else {
+      if (this.foodLevel <= 0) {
+        this.causeOfDeath = "died of starvation!";
+      } else if (this.sleepLevel <= 0) {
+        this.causeOfDeath = "died of lack of sleep!";
+      } else if (this.activityLevel <= 0) {
+        this.causeOfDeath = "died of lack of attention!";
+      }
+    }
+  },
+  causeOfDeath: ""
 };
 
 
@@ -35,10 +42,40 @@ $(document).ready(function() {
      $("input#petName").val("");
      $("div#create-tom").hide();
      $("div#tom").show();
+     $("button#feed").click(function(event){
+      newPet.foodLevel = 10;
+      $("#foodNum").text(newPet.foodLevel);
+      event.preventDefault();
+    });
+     $("button#sleep").click(function(event){
+      newPet.sleepLevel = 10;
+      $("#sleepNum").text(newPet.sleepLevel);
+      event.preventDefault();
+    });
+     $("button#play").click(function(event){
+      newPet.activityLevel = 10;
+      $("#activityNum").text(newPet.activityLevel);
+      event.preventDefault();
+    });
+     var time = window.setInterval(function(){
+      if (newPet.isAlive() === true){
+     newPet.timePasses();
      $("#foodNum").text(newPet.foodLevel);
      $("#sleepNum").text(newPet.sleepLevel);
      $("#activityNum").text(newPet.activityLevel);
      $("#putName").text(petName);
+      } else {
+        window.clearInterval(time);
+        $("#tom").hide();
+        $("#alert").text(petName + newPet.causeOfDeath);
+
+      }
+    }, 1000);
+     $("#foodNum").text(newPet.foodLevel);
+     $("#sleepNum").text(newPet.sleepLevel);
+     $("#activityNum").text(newPet.activityLevel);
+     $("#putName").text(petName);
+
 
 
      event.preventDefault();

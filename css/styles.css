@@ -8,3 +8,28 @@ input{
 #tom {
   display: none;
 }
+
+button {
+  display: inline;
+  margin: 20px;
+  margin-top: 0px;
+  margin-left: 40px;
+  border-style: solid;
+  border: 10px;
+  color: black;
+}
+
+#activityNum {
+  position: fixed;
+  font-size: 30px;
+}
+
+#sleepNum {
+  position: fixed;
+  font-size: 30px;
+}
+
+#foodNum {
+  position: fixed;
+  font-size: 30px;
+}
